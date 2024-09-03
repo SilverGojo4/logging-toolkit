@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "detailed": {
+      "format": "%(asctime)s - %(levelname)-8s - %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    }
+  },
+  "handlers": {
+    "error": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "level": "ERROR",
+      "formatter": "detailed",
+      "filename": "tests/python/error.log",
+      "maxBytes": 1048576,
+      "backupCount": 5
+    }
+  },
+  "loggers": {
+    "error_logger": {
+      "handlers": ["error"],
+      "level": "ERROR",
+      "propagate": false
+    }
+  }
+}
