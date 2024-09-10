@@ -20,19 +20,24 @@ def setup_logging(
 
     Parameters
     ----------
-    - config_file: str, Path to the logging configuration file.
-    - logger_name: str, Name of the logger.
-    - handler_name: str, Name of the handler.
-    - output_log_path: Optional[str], Path to the output log file.
+    config_file: `str`
+        Path to the logging configuration file.
+    logger_name: `str`
+        Name of the logger.
+    handler_name: `str`
+        Name of the handler.
+    output_log_path: `Optional[str]`
+        Path to the output log file.
 
     Returns
     ----------
-    - logger: logging.Logger, The configured logger.
+    logger: `logging.Logger`
+        The configured logger.
     """
 
     # Set up temporary logging configuration with formatted output
     logging.basicConfig(
-        level=logging.ERROR,
+        level=logging.WARNING,
         format="%(levelname)-8s: %(message)s",
     )
 
@@ -56,15 +61,17 @@ def setup_logging(
                 .get("filename", None)
             )
 
-            # If log_path is obtained, check if the directory for the log file exists
+            # Check if a log path is specified
             if log_path:
+
+                # Extract the directory part of the log file path
                 log_dir = os.path.dirname(log_path)
 
-                # If the directory does not exist, raise a FileNotFoundError
+                # Check if the directory does not exist
                 if not os.path.exists(log_dir):
-                    raise FileNotFoundError(
-                        f"Logging directory does not exist: {log_dir}"
-                    )
+
+                    # Create the directory and any necessary parent directories if they don't exist
+                    os.makedirs(log_dir, exist_ok=True)
 
             # If all steps are successful, apply the logging configuration read from the JSON file
             logging.config.dictConfig(config_dict)
